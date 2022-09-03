@@ -33,18 +33,12 @@ const CommentDetail = (props) => {
 const App = () => {
   const [items, setItems] = React.useState([]);
   
-  // Retrieve the data (fake it for now)
-  const loadItems = () => {
-    setItems();
-  }
+  // Retrieve the data
   useEffect(() => {
-    let items = [
-    { name: faker.name.firstName(), avatar: faker.image.avatar(), date: faker.date.recent(10), text: faker.hacker.phrase() },
-    { name: faker.name.firstName(), avatar: faker.image.avatar(), date: faker.date.recent(10), text: faker.hacker.phrase() },
-    { name: faker.name.firstName(), avatar: faker.image.avatar(), date: faker.date.recent(10), text: faker.hacker.phrase() }
-    ];
-    setItems(items);
-  }, []);
+    api.get('/comments').then((response) => {
+      setItems(response.data);
+    });
+  }, []); // The empty dependencies array means "load once"
 
   return (
     <div className="ui comments">
