@@ -1,42 +1,65 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { createRoot } from "react-dom/client";
+import api from "./api";
 import { faker } from "@faker-js/faker";
-//import moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
-// TODO:
-// For each comment, generate a random timestamp using faker
-// See: https://fakerjs.dev/api/date.html
-//
-// Format the generated random timestamp relatively
-// See: https://bobbyhadz.com/blog/javascript-convert-timestamp-to-time-ago)
-// Leads to: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/RelativeTimeFormat
-
-const rtf = new Intl.RelativeTimeFormat('en', {
-  numeric: 'auto',
+api.get('/comments').then((res) => {
+  console.log(res.data);
 });
 
+const CommentDetail = (props) => {
+  return (
+    <div className="comment">
+      <a className="avatar">
+        <img src={props.avatar} />
+      </a>
+      <div className="content">
+        <a className="author">{props.name}</a>
+        <div className="metadata">
+          <span className="date">{dayjs(props.date).fromNow()}</span>
+        </div>
+        <div className="text">
+          {props.text}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 const App = () => {
-  //console.log(faker.date.recent(10));
+  const [items, setItems] = React.useState([]);
+  
+  // Retrieve the data (fake it for now)
+  const loadItems = () => {
+    setItems();
+  }
+  useEffect(() => {
+    let items = [
+    { name: faker.name.firstName(), avatar: faker.image.avatar(), date: faker.date.recent(10), text: faker.hacker.phrase() },
+    { name: faker.name.firstName(), avatar: faker.image.avatar(), date: faker.date.recent(10), text: faker.hacker.phrase() },
+    { name: faker.name.firstName(), avatar: faker.image.avatar(), date: faker.date.recent(10), text: faker.hacker.phrase() }
+    ];
+    setItems(items);
+  }, []);
+
   return (
     <div className="ui comments">
       <h3 className="ui dividing header">Comments</h3>
-      <div className="comment">
-        <a className="avatar">
-          <img src={faker.image.avatar()} />
-        </a>
-        <div className="content">
-          <a className="author">{faker.name.firstName()}</a>
-          <div className="metadata">
-            <span className="date">{faker.date.recent(10).toString()}</span>
-          </div>
-          <div className="text">
-            {faker.hacker.phrase()}
-          </div>
-          <div className="actions">
-            <a className="reply">Reply</a>
-          </div>
-        </div>
-      </div>
+      {items.map((item, index) => {
+        return (
+          <CommentDetail
+            key={index}
+            name={item.name}
+            avatar={item.avatar}
+            date={item.date}
+            text={item.text}
+          />
+        );
+      })}
     </div>
   );
 }
