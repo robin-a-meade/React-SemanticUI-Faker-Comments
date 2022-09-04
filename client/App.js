@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "./api";
 import CommentDetail from "./CommentDetail";
+import ApprovalCard from "./ApprovalCard";
 
 const App = () => {
   const [items, setItems] = React.useState([]);
@@ -15,17 +16,20 @@ const App = () => {
   return (
     <div className="ui comments">
       <h3 className="ui dividing header">Comments</h3>
-      {items.map((item, index) => {
-        return (
-          <CommentDetail
-            key={index}
-            name={item.name}
-            avatar={item.avatar}
-            date={item.date}
-            text={item.text}
-          />
-        );
-      })}
+      <div className="ui cards">
+        {items.map((item, index) => {
+          return (
+            <ApprovalCard key={index}>
+              <CommentDetail
+                name={item.name}
+                avatar={item.avatar}
+                date={item.date}
+                text={item.text}
+              />
+            </ApprovalCard>
+          );
+        })}
+      </div>
     </div>
   );
 }

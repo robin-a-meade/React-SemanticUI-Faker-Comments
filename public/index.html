@@ -15,17 +15,23 @@
     }
     </style>
   </head>
-  <body>
+  <body class="ui container">
     <h1>React useState useEffect Express Faker Comments Template</h1>
     <p>This example illustrates the following:</p>
     <ul>
       <li>A React functional component that fetches data using axios</li>
       <ul><li>For this it uses the useState and useEffect hooks</li></ul>
+      <li>Rendering an array into React components using <code>map()</code> embedded in JSX</li>
+      <ul>
+        <li><a href="https://reactjs.org/docs/lists-and-keys.html#rendering-multiple-components">https://reactjs.org/docs/lists-and-keys.html#rendering-multiple-components</a></li>
+        <li><a href="https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-react">https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-react</a></li>
+      </ul>
       <li><code>express</code> HTTP server to serve the static files and to handle the route that provides the comment data</li>
       <li><code>@faker-js/faker</code> for generating fake data</li>
       <li><code>day.js</code> for formatting relative time</li>
+      <li><code>props.children</code> for handling nested child JSX components</li>
     </ul>
-    <img src="images/Example.jpg"/>
+    <p><img src="images/Example.jpg"/></p>
     <div id="root"></div>
     <script src="bundle.js"></script>
   </body>
